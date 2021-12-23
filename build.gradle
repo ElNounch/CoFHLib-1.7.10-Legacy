@@ -3,15 +3,19 @@ buildscript {
         mavenCentral()
         maven {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            url = "https://maven.minecraftforge.net/"
         }
         maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+		maven {
+            name = "jitpack"
+            url = "https://jitpack.io"
+        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'com.github.GTNewHorizons:ForgeGradle:1.2.4'
     }
 }
 
@@ -34,7 +38,7 @@ group = "cofh"
 archivesBaseName = "CoFHLib"
 
 minecraft {
-    version = "1.7.10-10.13.4.1448-1.7.10"
+    version = "1.7.10-10.13.4.1614-1.7.10"
     runDir = "eclipse/assets"
 }
 
@@ -83,3 +87,9 @@ artifacts {
 }
 
 project.tasks.build.dependsOn devJar, apiJar
+
+if (System.getenv().JITPACK) {
+    jar.classifier = ""
+	apiJar.classifier = ""
+    devJar.classifier = "DEV"
+}
