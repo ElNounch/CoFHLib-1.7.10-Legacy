@@ -64,7 +64,11 @@ processResources
 
 jar {
     version = minecraft.version + project.version
-    classifier = project.buildnumber
+    if (System.getenv().JITPACK) {
+        classifier = ""
+    } else {
+        classifier = project.buildnumber
+    }
 }
 
 task apiJar(type: Jar, dependsOn: 'sourceMainJava') {
@@ -72,13 +76,22 @@ task apiJar(type: Jar, dependsOn: 'sourceMainJava') {
         include "**/api/**/*"
     }
     version = "API${minecraft.version}${project.version}"
-    classifier = project.buildnumber
+    if (System.getenv().JITPACK) {
+        classifier = ""
+    } else {
+        classifier = project.buildnumber
+    }
 }
 
 task devJar(type: Jar, dependsOn: 'classes') {
     from sourceSets.main.output
     version = minecraft.version + project.version
-    classifier = "DEV-${project.buildnumber}"
+    classifier = 
+    if (System.getenv().JITPACK) {
+        classifier = "dev"
+    } else {
+        classifier = "DEV-${project.buildnumber}"
+    }
 }
 
 artifacts {
@@ -87,9 +100,3 @@ artifacts {
 }
 
 project.tasks.build.dependsOn devJar, apiJar
-
-if (System.getenv().JITPACK) {
-    jar.classifier = ""
-	apiJar.classifier = ""
-    devJar.classifier = "DEV"
-}
