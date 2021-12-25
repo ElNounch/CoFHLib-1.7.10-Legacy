@@ -24,7 +24,7 @@ apply plugin: 'forge'
 project.ext.buildnumber = "CUSTOM_BUILD" // referenced as project.buildnumber
 
 if (System.getenv().JITPACK) {
-		project.buildnumber = System.getenv().VERSION
+		project.buildnumber = System.getenv().GIT_COMMIT
 }
 else if (System.getenv().BUILD_NUMBER) // assuming jenkins ofcourse
 {
