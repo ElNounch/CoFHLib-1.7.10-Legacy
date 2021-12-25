@@ -23,7 +23,10 @@ apply plugin: 'forge'
 
 project.ext.buildnumber = "CUSTOM_BUILD" // referenced as project.buildnumber
 
-if (System.getenv().BUILD_NUMBER) // assuming jenkins ofcourse
+if (System.getenv().JITPACK) {
+		project.buildnumber = System.getenv().VERSION
+}
+else if (System.getenv().BUILD_NUMBER) // assuming jenkins ofcourse
 {
     project.buildnumber = System.getenv().BUILD_NUMBER
     println "Using build number ${project.buildnumber}..."
